@@ -102,7 +102,16 @@ spawn(function()
 					task.wait(delay)
 					for i, v in next, getFlower():GetDescendants() do
 						if v:IsA("ProximityPrompt") then
-							fireproximityprompt(v, 1, true)
+                            if v.Parent.Name == "Deletedis" then
+                                v.Parent:Destroy()
+                            end
+							local try = 0
+                            repeat
+                                wait(0.01)
+                                try += 1
+                                fireproximityprompt(v, 1, true)
+                            until not getFlower() or not TP or try == 10
+                            v.Parent.Name = "Deletedis"
 						end
 					end
 				until not getFlower() or not TP
@@ -111,13 +120,10 @@ spawn(function()
 	end
 end)
 
-while true do wait(TeleportBack)
-    ImprovedTeleport(Vector3.new(0,0,0))
-end
 task.wait()
 game.StarterGui:SetCore("SendNotification", {
 	Title = "Dxniz#1404"; 
-	Text = "real owner is time#3167. I added new things like tp back"; 
+	Text = "real owner is time#3167. I just improved farm"; 
 	Icon = "";
 	Duration = math.huge;
 })

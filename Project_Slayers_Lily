@@ -8,7 +8,7 @@ function autoload()
         end
     end)
 end
-
+autoload()
 game.Players.PlayerRemoving:Connect(function(player)
     if player.Name == game.Players.LocalPlayer.Name and AutoRejoin then
         local ts = game:GetService("TeleportService")

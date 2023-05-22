@@ -92,27 +92,29 @@ local function getFlower()
 end
 
 local function asdqw()
-    while task.wait() do
+    pcall(function()
+    	while task.wait() do
 		if TP then
-            repeat
-                task.wait()
-                ImprovedTeleport(getFlower().WorldPivot.Position)
-                task.wait(delay)
-                for i, v in next, getFlower():GetDescendants() do
-                    if v:IsA("ProximityPrompt") then
-                        local try = 0
-                        repeat
-                            wait(0.01)
-                            try += 1
-                            fireproximityprompt(v, 1, true)
-                            if not getFlower() or not TP then asdqw() break end
-                        until try == 10
-                        getFlower():Destroy()
-                    end
-                end
-            until not getFlower() or not TP
-        end
+		    repeat
+			task.wait()
+			ImprovedTeleport(getFlower().WorldPivot.Position)
+			task.wait(delay)
+			for i, v in next, getFlower():GetDescendants() do
+			    if v:IsA("ProximityPrompt") then
+				local try = 0
+				repeat
+				    wait(0.01)
+				    try += 1
+				    fireproximityprompt(v, 1, true)
+				    if not getFlower() or not TP then asdqw() break end
+				until try == 10
+				getFlower():Destroy()
+			    end
+			end
+		    until not getFlower() or not TP
+		end
 	end
+    end)
 end
 
 asdqw()

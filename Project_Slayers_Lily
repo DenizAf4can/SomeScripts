@@ -92,37 +92,60 @@ local function getFlower()
 end
 
 local function asdqw()
-    pcall(function()
+    local suc,err = pcall(function()
     	while task.wait() do
-		if TP then
-		    repeat
-			task.wait()
-			ImprovedTeleport(getFlower().WorldPivot.Position)
-			task.wait(delay)
-			for i, v in next, getFlower():GetDescendants() do
-			    if v:IsA("ProximityPrompt") then
-				local try = 0
-				repeat
-				    wait(0.01)
-				    try += 1
-				    fireproximityprompt(v, 1, true)
-				    if not getFlower() or not TP then asdqw() break end
-				until try == 10
-				getFlower():Destroy()
-			    end
-			end
-		    until not getFlower() or not TP
-		end
-	end
+            if TP then
+                repeat
+                task.wait()
+                ImprovedTeleport(getFlower().WorldPivot.Position)
+                task.wait(delay)
+                for i, v in next, getFlower():GetDescendants() do
+                    if v:IsA("ProximityPrompt") then
+                    local try = 0
+                    repeat
+                        wait(0.01)
+                        try += 1
+                        fireproximityprompt(v, 1, true)
+                        if not getFlower() or not TP then asdqw() break end
+                    until try == 10
+                    getFlower():Destroy()
+                    end
+                end
+                until not getFlower() or not TP
+            end
+        end
     end)
+    if suc then
+        while task.wait() do
+            if TP then
+                repeat
+                task.wait()
+                ImprovedTeleport(getFlower().WorldPivot.Position)
+                task.wait(delay)
+                for i, v in next, getFlower():GetDescendants() do
+                    if v:IsA("ProximityPrompt") then
+                    local try = 0
+                    repeat
+                        wait(0.01)
+                        try += 1
+                        fireproximityprompt(v, 1, true)
+                        if not getFlower() or not TP then asdqw() break end
+                    until try == 10
+                    getFlower():Destroy()
+                    end
+                end
+                until not getFlower() or not TP
+            end
+        end
+    else
+        asdqw()
+    end
 end
-
-asdqw()
-
-task.wait()
 game.StarterGui:SetCore("SendNotification", {
 	Title = "Dxniz#1404"; 
 	Text = "real owner is time#3167. I just improved farm"; 
 	Icon = "";
 	Duration = math.huge;
 })
+asdqw()
+

@@ -91,34 +91,31 @@ local function getFlower()
 	return flower
 end
 
-
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if TP then
-				repeat
-					task.wait()
-					ImprovedTeleport(getFlower().WorldPivot.Position)
-					task.wait(delay)
-					for i, v in next, getFlower():GetDescendants() do
-						if v:IsA("ProximityPrompt") then
-                            if v.Parent.Name == "Deletedis" then
-                                v.Parent:Destroy()
-                            end
-							local try = 0
-                            repeat
-                                wait(0.01)
-                                try += 1
-                                fireproximityprompt(v, 1, true)
-                            until not getFlower() or not TP or try == 10
-                            v.Parent.Name = "Deletedis"
-						end
-					end
-				until not getFlower() or not TP
-			end
-		end)
+local function asdqw()
+    while task.wait() do
+		if TP then
+            repeat
+                task.wait()
+                ImprovedTeleport(getFlower().WorldPivot.Position)
+                task.wait(delay)
+                for i, v in next, getFlower():GetDescendants() do
+                    if v:IsA("ProximityPrompt") then
+                        local try = 0
+                        repeat
+                            wait(0.01)
+                            try += 1
+                            fireproximityprompt(v, 1, true)
+                            if not getFlower() or not TP then asdqw() break end
+                        until try == 10
+                        getFlower():Destroy()
+                    end
+                end
+            until not getFlower() or not TP
+        end
 	end
-end)
+end
+
+asdqw()
 
 task.wait()
 game.StarterGui:SetCore("SendNotification", {
